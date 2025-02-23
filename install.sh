@@ -13,7 +13,7 @@ if [ "$(id -u)" -ne 0 ]; then
 fi
 
 # Descargar el archivo ejecutable 's' y moverlo a /usr/local/bin para que sea accesible globalmente
-curl -sSL https://raw.githubusercontent.com/afmorac/holbertonschool-low_level_programming/master/s -o /usr/local/bin/s
+curl -sSL https://raw.githubusercontent.com/afmorac/holbertonschool-low_level_programming/master/sat/s -o /usr/local/bin/s
 
 
 # Darle permisos de ejecución
