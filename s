@@ -21,8 +21,6 @@ display_menu() {
     echo "4. Learning Mode"
     echo "q. Quit"
     echo ""
-    read -n 1 -p "Select an option: " option
-    echo ""
 }
 
 # Function to create a file
@@ -34,15 +32,11 @@ create_file() {
             echo -e "${RED}Error: File name cannot be empty.${NC}"
             continue
         fi
-        read -p "Confirm file name '$filename'? (y/n): " confirm
-        [[ "$confirm" == "n" ]] && continue
-        [[ "$confirm" == "q" ]] && return
         if [[ -e "$filename" ]]; then
             echo -e "${RED}Error: File '$filename' already exists. Choose another name.${NC}"
         else
             touch "$filename"
             echo -e "${GREEN}File '$filename' created.${NC}"
-            session_log+="touch $filename\n"
             return
         fi
     done
@@ -51,13 +45,16 @@ create_file() {
 # Function to handle Git Workflow
 git_workflow() {
     echo -e "${YELLOW}🚀 Git Workflow:${NC}"
+    if ! git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
+        echo -e "${RED}Error: Not inside a Git repository.${NC}"
+        return
+    fi
     
     while true; do
         echo "Choose an action:"
         echo "  1. Add files"
         echo "  2. Commit changes"
         echo "  3. Push to remote"
-        echo "  4. Show Git Status"
         echo "  q. Quit Git Workflow"
         read -p "Select an option: " git_option
 
@@ -72,11 +69,9 @@ git_workflow() {
                 echo -e "${GREEN}Commit created.${NC}"
                 ;;
             3)
-                git push
-                echo -e "${GREEN}Changes pushed to remote repository.${NC}"
-                ;;
-            4)
-                git status
+                current_branch=$(git branch --show-current)
+                git push origin "$current_branch"
+                echo -e "${GREEN}Changes pushed to '$current_branch' branch.${NC}"
                 ;;
             q)
                 return;;
@@ -101,9 +96,8 @@ compile_and_run_c_file() {
     if [[ $? -eq 0 ]]; then
         echo -e "${GREEN}Compilation successful. Running program...${NC}"
         ./$cfile.out
-        echo -e "\n${YELLOW}Press any key to continue...${NC}"
-        read -n 1  # Esto pausa hasta que presiones una tecla
-        clear  # Limpia la pantalla después de que el usuario vio el resultado
+        read -n 1 -p "Press any key to continue..."
+        clear
     else
         echo -e "${RED}Compilation failed. Check the errors above.${NC}"
     fi
@@ -115,7 +109,6 @@ learning_mode() {
     echo "LEARNING MODE - Explanation"
     echo "--------------------------------"
     echo "This mode tracks your current session activities."
-    echo -e "${YELLOW}$session_log${NC}"
     echo "--------------------------------"
     echo "Press 'm' to go back to the menu, or 'q' to quit."
     while true; do
@@ -129,19 +122,20 @@ learning_mode() {
 }
 
 # Main Execution
-session_log=""
 if [[ $# -eq 0 ]]; then
     while true; do
         display_menu
+        read -r -p "Select an option: " option
         case "$option" in
             1) create_file ;;
             2) git_workflow ;;
             3) compile_and_run_c_file ;;
             4) learning_mode ;;
             q) exit 0 ;;
-            *) echo "Invalid option, try again." ;;
+            *) echo -e "${RED}Invalid option, try again.${NC}" ;;
         esac
     done
 else
     echo "Invalid usage. Run 's' without arguments to open the menu."
 fi
+
