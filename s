@@ -44,39 +44,52 @@ create_file() {
 
 # Function to handle Git Workflow
 git_workflow() {
-    echo -e "${YELLOW}🚀 Git Workflow:${NC}"
     if ! git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
-        echo -e "${RED}Error: Not inside a Git repository.${NC}"
+        echo -e "${RED}Error: You are not in a Git repository.${NC}"
+        echo -e "${YELLOW}Tip: Use 'git init' to create a new repository here.${NC}"
+        echo -e "${CYAN}Or navigate to an existing Git repository and try again.${NC}"
+        read -p "Press any key to return to the menu..."
         return
     fi
-    
-    while true; do
-        echo "Choose an action:"
-        echo "  1. Add files"
-        echo "  2. Commit changes"
-        echo "  3. Push to remote"
-        echo "  q. Quit Git Workflow"
-        read -p "Select an option: " git_option
 
-        case "$git_option" in
+    while true; do
+        echo -e "${YELLOW}Git Workflow Steps:${NC}"
+        echo "1. git add"
+        echo "2. git commit"
+        echo "3. git push"
+        echo "q. Quit"
+        read -p "Choose step: " git_step
+
+        case $git_step in
             1)
-                git add .
-                echo -e "${GREEN}Files added.${NC}"
+                while true; do
+                    echo -e "${YELLOW}git add:${NC}"
+                    echo "  m - Add all files"
+                    echo "  d - Add specific directory"
+                    echo "  f - Add specific file"
+                    echo "  c - Custom add command"
+                    echo "  q - Quit"
+                    read -p "Choose option: " add_option
+
+                    case $add_option in
+                        m) git add . ; break ;;
+                        d) read -p "Enter directory name: " dir; git add "$dir" ; break ;;
+                        f) read -p "Enter file name: " file; git add "$file" ; break ;;
+                        c) read -p "Enter custom add command: " custom_add; eval "$custom_add" ; break ;;
+                        q) break ;;
+                        *) echo -e "${RED}Invalid option. Try again.${NC}" ;;
+                    esac
+                done
                 ;;
             2)
                 read -p "Enter commit message: " commit_msg
                 git commit -m "$commit_msg"
-                echo -e "${GREEN}Commit created.${NC}"
                 ;;
             3)
-                current_branch=$(git branch --show-current)
-                git push origin "$current_branch"
-                echo -e "${GREEN}Changes pushed to '$current_branch' branch.${NC}"
+                git push
                 ;;
-            q)
-                return;;
-            *)
-                echo -e "${RED}Invalid option. Try again.${NC}";;
+            q) return ;;
+            *) echo -e "${RED}Invalid option. Try again.${NC}" ;;
         esac
     done
 }
