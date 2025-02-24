@@ -10,16 +10,7 @@ Puedes copiar y pegar los siguientes comandos **todos a la vez** en tu terminal 
 git clone https://github.com/afmorac/sat.git && cd sat && sudo cp s /usr/local/bin/s && sudo chmod +x /usr/local/bin/s
 
 ```
-
-tambien:
-
-git clone https://github.com/afmorac/sat.git
-cd sat
-sudo cp s /usr/local/bin/s
-sudo chmod +x /usr/local/bin/s
-
-
-```
+````
 
 ## 📌 Uso
 Una vez instalado, puedes ejecutar `s` desde cualquier directorio simplemente escribiendo:
