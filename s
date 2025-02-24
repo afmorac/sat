@@ -21,9 +21,6 @@ display_menu() {
     echo "4. Learning Mode"
     echo "q. Quit"
     echo ""
-    read -n 1 -p "Select an option: " option
-    echo ""
-    [[ "$option" == "q" ]] && exit 0
 }
 
 # Function to create a file
@@ -51,8 +48,30 @@ create_file() {
 
 # Function to run Git Workflow
 git_workflow() {
-    echo -e "${YELLOW}Git Workflow: Under development.${NC}"
+    echo -e "${YELLOW}🚀 Git Workflow:${NC}"
+    
+    # Verificar el estado del repo antes de continuar
+    git status
+    
+    # Solicitar mensaje de commit
+    read -p "Commit message: " commit_msg
+    
+    # Agregar archivos al commit
+    git add .
+    
+    # Realizar el commit
+    git commit -m "$commit_msg"
+    
+    # Empujar los cambios a GitHub
+    git push
+    
+    echo -e "${GREEN}✅ Git push completed.${NC}"
+    
+    # Esperar una tecla para regresar al menú
+    read -n 1 -p "Press any key to return to the menu..."
+    clear
 }
+
 
 # Function to compile and run a C file
 compile_and_run_c_file() {
@@ -96,18 +115,19 @@ learning_mode() {
     done
 }
 
-# Main Execution
+# Main Execution Loop
 session_log=""
 if [[ $# -eq 0 ]]; then
     while true; do
         display_menu
+        read -r option  # 🔥 Captura la opción correctamente
         case "$option" in
             1) create_file ;;
-            2) git_workflow ;;
+            2) git_workflow ;;  # 🔥 Ahora ejecutará Git Workflow correctamente
             3) compile_and_run_c_file ;;
             4) learning_mode ;;
             q) exit 0 ;;
-            *) echo "Invalid option, try again." ;;
+            *) echo -e "${RED}Invalid option, try again.${NC}" ;;
         esac
     done
 else
