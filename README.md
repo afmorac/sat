@@ -1,47 +1,66 @@
 # Shell Automation Tool (SAT)
 
-Shell Automation Tool (SAT) es una herramienta para automatizar tareas comunes en el terminal, como la creación de archivos, la ejecución de comandos de Git, y más. Con esta herramienta, puedes mejorar tu flujo de trabajo en el terminal de manera eficiente.
+## 🚀 Instalación
+Para instalar `s` y usarlo globalmente en tu terminal, ejecuta lo siguiente:
 
-## Requisitos del Sistema
-
-Este script está optimizado para usar en shells **Bash** y **Zsh**. Si usas otro shell (por ejemplo, **Fish** o **Tcsh**), es recomendable cambiar temporalmente a uno de estos shells para asegurar que el script funcione correctamente.
-
-### Para cambiar a **Bash**:
-
-Si no estás utilizando **Bash**, puedes cambiar tu shell de manera temporal a **Bash** con el siguiente comando:
+Puedes copiar y pegar los siguientes comandos **todos a la vez** en tu terminal para instalar `s` de forma rápida y sin pasos manuales:
 
 ```bash
-chsh -s /bin/bash
+
+git clone https://github.com/afmorac/sat.git && cd sat && sudo cp s /usr/local/bin/s && sudo chmod +x /usr/local/bin/s
+
+```
+
+tambien:
+
+git clone https://github.com/afmorac/sat.git
+cd sat
+sudo cp s /usr/local/bin/s
+sudo chmod +x /usr/local/bin/s
+
+
+```
+
+## 📌 Uso
+Una vez instalado, puedes ejecutar `s` desde cualquier directorio simplemente escribiendo:
+
+```bash
 
 ```zsh
-chsh -s /bin/zsh
 
+Esto abrirá el menú de SAT, donde puedes automatizar tareas comunes como:
+- Crear archivos rápidamente.
+- Ejecutar flujos de trabajo con `git`.
+- Compilar y ejecutar archivos en C.
+- Usar el modo de aprendizaje para entender los comandos.
 
-Instalación
-Instalación automática (recomendada):
+## 🛠 Funcionalidades
+SAT incluye las siguientes opciones:
+1️⃣ **Crear archivos** 📄
+2️⃣ **Git Workflow** 🌿 (add, commit, push, status, log)
+3️⃣ **Compilar y ejecutar archivos en C** ⚙️
+4️⃣ **Modo de Aprendizaje** 📚
 
-Para instalar Shell Automation Tool (SAT), simplemente ejecuta el siguiente comando en tu terminal:
+## 🔄 Actualización
+Para actualizar SAT a la última versión, ejecuta:
+```bash
+cd sat
+git pull origin main
+sudo cp s /usr/local/bin/s
+sudo chmod +x /usr/local/bin/s
+```
 
-sudo curl -sSL https://raw.githubusercontent.com/afmorac/holbertonschool-low_level_programming/master/sat/install.sh | sudo bash
+## 💡 Notas
+- SAT requiere permisos de administrador para copiar el script en `/usr/local/bin/`.
+- Si `s` no se ejecuta tras la instalación, verifica que `/usr/local/bin/` está en tu `$PATH` ejecutando:
+  ```bash
+  echo $PATH
+  ```
 
-Uso
+## 📜 Licencia
+Este proyecto está bajo la licencia MIT. Puedes usarlo y modificarlo libremente.
 
-Una vez que SAT esté instalado, puedes usar el comando s desde cualquier lugar de tu terminal para acceder al menú de Shell Automation Tool (SAT).
+---
 
-El menú tendrá las siguientes opciones:
+🚀 **Disfruta de la automatización con SAT!**
 
-    Crear un archivo: Crear un archivo nuevo.
-    Flujo de trabajo de Git: Realizar acciones básicas de Git.
-    Compilar y ejecutar un archivo C: Compilar y ejecutar archivos de código C.
-    Modo de aprendizaje: Modo interactivo para ver las actividades del sistema.
-
-Para usar SAT, solo selecciona la opción correspondiente al número y sigue las instrucciones en el terminal.
-
-Licencia
-
-Shell Automation Tool (SAT) es de uso gratuito, pero no puede utilizarse con fines comerciales ni generar ingresos para otros sin el permiso del autor. Si deseas usar esta herramienta, asegúrate de respetar esta restricción.
-
-La licencia completa de este proyecto está disponible en el archivo LICENSE dentro del repositorio.
-Contribuciones
-
-Si deseas contribuir al proyecto, puedes hacer un fork del repositorio, hacer los cambios que consideres necesarios, y enviar un pull request.
