@@ -21,6 +21,8 @@ display_menu() {
     echo "4. Learning Mode"
     echo "q. Quit"
     echo ""
+    read -n 1 -p "Select an option: " option
+    echo ""
 }
 
 # Function to create a file
@@ -46,32 +48,43 @@ create_file() {
     done
 }
 
-# Function to run Git Workflow
+# Function to handle Git Workflow
 git_workflow() {
     echo -e "${YELLOW}🚀 Git Workflow:${NC}"
     
-    # Verificar el estado del repo antes de continuar
-    git status
-    
-    # Solicitar mensaje de commit
-    read -p "Commit message: " commit_msg
-    
-    # Agregar archivos al commit
-    git add .
-    
-    # Realizar el commit
-    git commit -m "$commit_msg"
-    
-    # Empujar los cambios a GitHub
-    git push
-    
-    echo -e "${GREEN}✅ Git push completed.${NC}"
-    
-    # Esperar una tecla para regresar al menú
-    read -n 1 -p "Press any key to return to the menu..."
-    clear
-}
+    while true; do
+        echo "Choose an action:"
+        echo "  1. Add files"
+        echo "  2. Commit changes"
+        echo "  3. Push to remote"
+        echo "  4. Show Git Status"
+        echo "  q. Quit Git Workflow"
+        read -p "Select an option: " git_option
 
+        case "$git_option" in
+            1)
+                git add .
+                echo -e "${GREEN}Files added.${NC}"
+                ;;
+            2)
+                read -p "Enter commit message: " commit_msg
+                git commit -m "$commit_msg"
+                echo -e "${GREEN}Commit created.${NC}"
+                ;;
+            3)
+                git push
+                echo -e "${GREEN}Changes pushed to remote repository.${NC}"
+                ;;
+            4)
+                git status
+                ;;
+            q)
+                return;;
+            *)
+                echo -e "${RED}Invalid option. Try again.${NC}";;
+        esac
+    done
+}
 
 # Function to compile and run a C file
 compile_and_run_c_file() {
@@ -115,22 +128,20 @@ learning_mode() {
     done
 }
 
-# Main Execution Loop
+# Main Execution
 session_log=""
 if [[ $# -eq 0 ]]; then
     while true; do
         display_menu
-        read -r option  # 🔥 Captura la opción correctamente
         case "$option" in
             1) create_file ;;
-            2) git_workflow ;;  # 🔥 Ahora ejecutará Git Workflow correctamente
+            2) git_workflow ;;
             3) compile_and_run_c_file ;;
             4) learning_mode ;;
             q) exit 0 ;;
-            *) echo -e "${RED}Invalid option, try again.${NC}" ;;
+            *) echo "Invalid option, try again." ;;
         esac
     done
 else
     echo "Invalid usage. Run 's' without arguments to open the menu."
 fi
-
