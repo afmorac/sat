@@ -13,7 +13,7 @@ if [ "$(id -u)" -ne 0 ]; then
 fi
 
 # Descargar el archivo ejecutable 's' y moverlo a /usr/local/bin para que sea accesible globalmente
-echo "Descargando el archivo ejecutable 's'..."
+echo "Descargando y moviendo el archivo ejecutable 's' a /usr/local/bin..."
 curl -sSL https://raw.githubusercontent.com/afmorac/holbertonschool-low_level_programming/master/sat/s -o /usr/local/bin/s
 
 # Darle permisos de ejecución
