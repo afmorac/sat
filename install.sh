@@ -12,12 +12,22 @@ if [ "$(id -u)" -ne 0 ]; then
     exit 1
 fi
 
-# Descargar el archivo ejecutable 's' y moverlo a /usr/local/bin para que sea accesible globalmente
-echo "Descargando y moviendo el archivo ejecutable 's' a /usr/local/bin..."
-curl -sSL https://raw.githubusercontent.com/afmorac/holbertonschool-low_level_programming/sat/s -o /usr/local/bin/s
+# Descargar el archivo ejecutable 's' desde el repositorio de GitHub
+echo "Descargando el archivo ejecutable 's'..."
+curl -sSL https://raw.githubusercontent.com/afmorac/holbertonschool-low_level_programming/master/sat/s -o /tmp/s
+
+# Verificar si la descarga fue exitosa
+if [ ! -f /tmp/s ]; then
+    echo "Error: No se pudo descargar el archivo 's'."
+    exit 1
+fi
+
+# Mover el archivo descargado a /usr/local/bin para que sea accesible globalmente
+echo "Moviendo el archivo 's' a /usr/local/bin..."
+sudo mv /tmp/s /usr/local/bin/s
 
 # Darle permisos de ejecución
-chmod +x /usr/local/bin/s
+sudo chmod +x /usr/local/bin/s
 
 # Confirmación de instalación
 echo "Shell Automation Tool (SAT) instalado correctamente. Ahora puede usarlo globalmente con el comando 's'."
